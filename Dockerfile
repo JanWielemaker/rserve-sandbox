@@ -3,7 +3,15 @@ FROM r-base
 
 # install packages
 # these are ones I like
-RUN echo 'install.packages(c("ggplot2", "plyr", "reshape2", "RColorBrewer", "scales","grid", "wesanderson", "Rserve"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
+RUN echo 'install.packages(c("ggplot2"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
+    && Rscript /tmp/packages.R
+
+RUN apt-get update && apt-get install -y \
+	libcurl4-openssl-dev \
+	libssl-dev \
+	libcairo-dev
+
+RUN echo 'install.packages("Rserve",,"http://rforge.net/",type="source")' > /tmp.packages.R \
     && Rscript /tmp/packages.R
 
 # create an R user
