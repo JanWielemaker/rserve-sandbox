@@ -11,8 +11,8 @@ RUN apt-get update && apt-get install -y \
 	libssl-dev \
 	libcairo-dev
 
-RUN echo 'install.packages("Rserve",,"http://rforge.net/",type="source")' > /tmp.packages.R \
-    && Rscript /tmp/packages.R
+RUN echo 'install.packages("Rserve",,"http://rforge.net/",type="source")' > /tmp/packages2.R \
+    && Rscript /tmp/packages2.R
 
 # create an R user
 ENV HOME /home/ruser
