@@ -15,7 +15,7 @@ WORKDIR $HOME
 USER ruser
 
 # set the command
-ADD start.R start.R
 ADD Rserv.conf Rserv.conf
+
 EXPOSE 6311
-CMD Rscript start.R
+CMD /usr/bin/R CMD Rserve --no-save --RS-conf Rserv.conf
