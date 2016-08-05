@@ -35,5 +35,6 @@ USER ruser
 
 # set the command
 ADD Rserv.conf Rserv.conf
+ADD Rserv.sh Rserv.sh
 
-CMD /usr/bin/R CMD Rserve --no-save --RS-conf Rserv.conf
+CMD /bin/bash Rserv.sh

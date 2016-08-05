@@ -17,7 +17,18 @@ container, we
     - Creates the docker image
 
   - `make run`
-    - Starts the Rserve container
+    - Starts the Rserve container.  This creates a Unix domain
+      socket `/home/rserve/socket` that allows for contacting
+      the R server.
 
   - `make shell`
     - Starts the container with a shell, so you can look around
+
+## Customization
+
+Edit
+
+  - `Dockerfile.in` for adding additional packages to R
+  - `Rserve.sh` for setting limits for the Rserve processes
+  - `Rserve.conf` for configuring the Rserve process.  Documentation
+    is available from the [Rserve wiki](https://github.com/s-u/Rserve/wiki/rserve.conf)
