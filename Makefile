@@ -20,7 +20,7 @@ user: $(UHOME)
 
 $(UHOME):
 	sudo useradd --system --create-home --home-dir $(UHOME) $(USER)
-	sudo chmod 755 $(UHOME)
+	sudo chmod 750 $(UHOME)
 
 deluser:
 	sudo userdel $(USER)
