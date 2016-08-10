@@ -2,6 +2,14 @@ USER=rserve
 UHOME=/home/$(USER)
 MOUNT=-v /home/$(USER):/home/rserve
 
+all::
+	@echo "Targets:"
+	@echo
+	@echo "  image		Build the docker image"
+	@echo "  run		Run the image one time"
+	@echo "  install	Run the image with --restart=unless-stopped"
+	@echo "  shell		Run an interactive shell in the image"
+
 image:	Dockerfile
 	docker build -t rserve .
 
@@ -12,6 +20,9 @@ Dockerfile: $(UHOME) Dockerfile.in
 
 run:
 	docker run --net=none --detach $(MOUNT) rserve
+
+install:
+	docker run --net=none --detach --restart=unless-stopped $(MOUNT) rserve
 
 shell:
 	docker run -it $(MOUNT)	rserve /bin/bash
