@@ -1,4 +1,5 @@
 # R Rserve docker image for safe execution
+
 This directory builds a docker image based on Debian that safely executes 
 Rserve. The Rserve instance is made available as `/home/rserve/socket`. To 
 protect the container, we:
@@ -9,9 +10,11 @@ protect the container, we:
 - Disable most binaries using `chmod`, except for those needed.
 
 ## Installation
-You need to install and enable docker.
+
+You need to install and enable Docker.
 
 ### Makefile targets
+
 - `image`
   - Creates `/home/rserve`
   - Updates `Dockerfile`
@@ -26,6 +29,7 @@ You need to install and enable docker.
   - Starts the container with a shell, so you can look around
 
 ## Customization
+
 Edit:
 
 - `Dockerfile.in` for adding additional packages to R
@@ -35,4 +39,6 @@ Edit:
    [Rserve wiki](https://github.com/s-u/Rserve/wiki/rserve.conf)
 
 ## License
+
+Copyright (c) 2016, Jan Wielemaker, Franco Masotti.
 2-Clause BSD (aka FreeBSD).
