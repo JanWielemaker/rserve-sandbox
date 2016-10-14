@@ -1,3 +1,8 @@
+#!/usr/bin/make -f
+
+# Copyright (c) 2016, Jan Wielemaker, Franco Masotti.
+# See LICENSE file for details.
+
 USER=rserve
 UHOME=/home/$(USER)
 MOUNT=-v /home/$(USER):/home/rserve
