@@ -1,16 +1,17 @@
+DOPTS=--net=none --detach --name=rserve
+
 all::
 	@echo "Targets:"
 	@echo
 	@echo "  image		Build the docker image"
 	@echo "  run		Run the image one time"
 	@echo "  install	Run the image with --restart=unless-stopped"
-	@echo "  shell		Run an interactive shell in the image"
 
 image:	Dockerfile
 	docker build -t rserve .
 
 run:
-	docker run --net=none --detach --name=rserve rserve
+	docker run $(DOPTS) rserve
 
 install:
-	docker run --net=none --detach --restart=unless-stopped rserve
+	docker run $(DOPTS) --restart=unless-stopped rserve

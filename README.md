@@ -1,19 +1,50 @@
 # R Rserve docker image for safe execution
 
-This directory builds a docker image   that  safely executes Rserve. The
-Rserve instance is made available as /home/rserve/socket. To protect the
-container, we
+This directory builds a docker image that safely executes Rserve. Rserve
+connections use a Unix domain socket, such   that  that container can be
+started with the `--net=none` to deny it   any  access to a network. The
+socket is created in the volume `/rserve` and names `socket`.  There are
+two ways to make the socket available:
+
+  1. Start using `--name=rserve`.  This makes the socket available from
+  embedded volume. Other docket container can use `--with-volumes-from
+  rserve` to get access to the Rserve socket.
+
+    ```
+    docker run --net=none --name=rserve rserve
+    ```
+
+
+  2. Create a directory that is owned by a non-priviledged user/group
+  and has its permissions set to provide access to the selected users.
+  For example:
+
+    ```
+    useradd -U --create-home --home=/home/rserve rserve
+    chmod 770 /home/rserve
+    ```
+
+  Now, the image can be started using the command below, creating
+  `/home/rserve/socket`.  Note that the R server runs with the
+  UID/GID of the mounted directory.
+
+    ```
+    docker run --net=none -v /home/rserve:/rserve rserve
+    ```
+
+## Safety
+
+To protect the container, we
 
   - Run the container using `--net=none` to disable networking inside
     the container
   - Run `Rserve` as a non-priveleged user
-  - Disable most binaries using `chmod`, except for those needed.
+  - Disable all executables using `chmod 0`, except for those
+    needed to run `R`.
 
 ## Installation
 
   - `make image`
-    - Creates `/home/rserve`
-    - Updates `Dockerfile`
     - Creates the docker image
 
   - `make run`
@@ -21,14 +52,13 @@ container, we
       socket `/home/rserve/socket` that allows for contacting
       the R server.
 
-  - `make shell`
-    - Starts the container with a shell, so you can look around
-
 ## Customization
 
-Edit
+  - The entry point `Rserve.sh` accepts options to limit resources.
+    Use the command below for details
 
-  - `Dockerfile.in` for adding additional packages to R
-  - `Rserve.sh` for setting limits for the Rserve processes
-  - `Rserve.conf` for configuring the Rserve process.  Documentation
-    is available from the [Rserve wiki](https://github.com/s-u/Rserve/wiki/rserve.conf)
+    ```
+    docker run rserve --help
+    ```
+
+  - Please edit `Dockerfile` to add additional R packages.

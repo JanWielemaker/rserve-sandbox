@@ -24,18 +24,12 @@ RUN chmod o-rwx \
     chmod o+rx \
 	/usr/bin/R /usr/bin
 
-# create an R user
-ENV HOME /home/ruser
-RUN mkdir /rserve
-RUN useradd -U --create-home --home-dir $HOME ruser && \
-    chown -R ruser:ruser /rserve
-
 VOLUME /rserve
-WORKDIR $HOME
-USER ruser
 
 # set the command
-ADD Rserv.conf Rserv.conf
-ADD Rserv.sh Rserv.sh
+RUN mkdir /home/ruser
+ADD Rserv.conf /home/ruser/Rserv.conf
+ADD Rserv.sh /home/ruser/Rserv.sh
+WORKDIR /home/ruser
 
-CMD /bin/bash Rserv.sh
+ENTRYPOINT ["./Rserv.sh"]
