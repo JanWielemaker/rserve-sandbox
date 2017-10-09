@@ -1,7 +1,3 @@
-USER=rserve
-UHOME=/home/$(USER)
-MOUNT=-v /home/$(USER):/home/rserve
-
 all::
 	@echo "Targets:"
 	@echo
@@ -13,26 +9,8 @@ all::
 image:	Dockerfile
 	docker build -t rserve .
 
-Dockerfile: $(UHOME) Dockerfile.in
-	sed -e "s/@USERID@/$$(id -u $(USER))/g" \
-	    -e "s/@GROUPID@/$$(id -g $(USER))/g" \
-		Dockerfile.in > Dockerfile
-
 run:
-	docker run --net=none --detach $(MOUNT) rserve
+	docker run --net=none --detach --name=rserve rserve
 
 install:
-	docker run --net=none --detach --restart=unless-stopped $(MOUNT) rserve
-
-shell:
-	docker run -it $(MOUNT)	rserve /bin/bash
-
-user: $(UHOME)
-
-$(UHOME):
-	sudo useradd --system --create-home --home-dir $(UHOME) $(USER)
-	sudo chmod 750 $(UHOME)
-
-deluser:
-	sudo userdel $(USER)
-	sudo rm -rf $(UHOME)
+	docker run --net=none --detach --restart=unless-stopped rserve

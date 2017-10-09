@@ -26,10 +26,11 @@ RUN chmod o-rwx \
 
 # create an R user
 ENV HOME /home/ruser
-RUN groupadd -g @GROUPID@ ruser && \
-    useradd -u @USERID@ -g @GROUPID@ --create-home --home-dir $HOME ruser && \
-    chown -R ruser:ruser $HOME
+RUN mkdir /rserve
+RUN useradd -U --create-home --home-dir $HOME ruser && \
+    chown -R ruser:ruser /rserve
 
+VOLUME /rserve
 WORKDIR $HOME
 USER ruser
 
