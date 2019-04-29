@@ -14,9 +14,21 @@ RUN echo 'install.packages(c("ggplot2"), repos="http://cran.us.r-project.org", d
 RUN echo 'install.packages("Rserve",,"http://rforge.net/",type="source")' > /tmp/packages2.R \
     && Rscript /tmp/packages2.R
 
-# Popular data science packages
-# RUN echo 'install.packages(c("data.table", "dplyr", "plyr", "scales", "lubridate", "ggplot2", "grid", "BSDA", "cluster", "clustertend", "factoextra", "heatmaply", "NbClust", "RColorBrewer", "pandoc"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
-#    && Rscript /tmp/packages.R
+RUN apt-get install -y \
+	libtiff-dev \
+	libxml2-dev
+
+# Bio DB packages
+RUN echo 'install.packages(c("igraph"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
+    && Rscript /tmp/packages.R
+
+# Bio DB packages
+RUN echo 'install.packages(c("qgraph", "svglite", "GGally", "network", "sna"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
+    && Rscript /tmp/packages.R
+
+# Optional Bio DB packages
+RUN echo 'install.packages(c("pheatmap", "NMF"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
+    && Rscript /tmp/packages.R
 
 # Disable development tools
 RUN chmod o-rwx \
