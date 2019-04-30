@@ -4,7 +4,10 @@ FROM r-base
 RUN apt-get update && apt-get install -y \
 	libcurl4-openssl-dev \
 	libssl-dev \
-	libcairo-dev
+	libcairo-dev \
+	libxml2-dev \
+	libudunits2-dev \
+	libgeos++-dev
 
 # install packages
 # these are ones I like
@@ -16,7 +19,7 @@ RUN echo 'install.packages("Rserve",,"http://rforge.net/",type="source")' > /tmp
 
 RUN apt-get install -y \
 	libtiff-dev \
-	libxml2-dev
+	libopenmpi-dev
 
 # Bio DB packages
 RUN echo 'install.packages(c("igraph"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
