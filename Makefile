@@ -1,4 +1,5 @@
-DOPTS=--net=none --detach --name=rserve
+# DOPTS=--net=none --detach --name=rserve
+DOPTS=--net=none --detach -v /home/rserve:/rserve
 
 all::
 	@echo "Targets:"
