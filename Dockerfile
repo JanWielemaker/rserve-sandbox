@@ -33,6 +33,14 @@ RUN echo 'install.packages(c("qgraph", "svglite", "GGally", "network", "sna"), r
 RUN echo 'install.packages(c("pheatmap", "NMF"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
     && Rscript /tmp/packages.R
 
+# BiocManager
+RUN echo 'install.packages(c("BiocManager"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
+    && Rscript /tmp/packages.R
+
+# GOstats
+RUN echo 'BiocManager::install("GOstats")' > /tmp/packages.R \
+    && Rscript /tmp/packages.R
+
 # Disable development tools
 RUN chmod o-rwx \
 	/usr/lib/gcc /usr/lib/python* /usr/lib/tcltk /usr/lib/valgrind \

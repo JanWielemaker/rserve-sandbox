@@ -1,5 +1,6 @@
 # DOPTS=--net=none --detach --name=rserve
 DOPTS=--net=none --detach -v /home/rserve:/rserve
+ROPTS=--limit-data=unlimited --limit-time=900 --limit-file=10000000
 
 all::
 	@echo "Targets:"
@@ -9,10 +10,10 @@ all::
 	@echo "  install	Run the image with --restart=unless-stopped"
 
 image:	Dockerfile
-	docker build -t rserve .
+	docker build -t rserve . 2>&1 | tee mkimg.log
 
 run:
-	docker run $(DOPTS) rserve
+	docker run $(DOPTS) rserve $(ROPTS)
 
 install:
-	docker run $(DOPTS) --restart=unless-stopped rserve
+	docker run $(DOPTS) --restart=unless-stopped rserve $(ROPTS)
