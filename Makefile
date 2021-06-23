@@ -1,4 +1,4 @@
-DOPTS=--net=none --detach --name=rserve
+DOPTS=--rm --net=none --detach --name=rserve
 # Default limits for the R server processes
 ROPTS=--limit-data=4000000 --limit-time=300 --limit-file=20000
 
