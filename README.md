@@ -1,9 +1,9 @@
 # R Rserve docker image for safe execution
 
 This directory builds a docker image that safely executes Rserve. Rserve
-connections use a Unix domain socket, such   that  that container can be
+connections use a Unix domain socket,  such   that  the container can be
 started with the `--net=none` to deny it   any  access to a network. The
-socket is created in the volume `/rserve` and names `socket`.  There are
+socket is created in the volume `/rserve`  and named `socket`. There are
 two ways to make the socket available:
 
   1. Start using `--name=rserve`.  This makes the socket available from
