@@ -1,4 +1,5 @@
 #!/bin/bash
+# Copying: This code is in the public domain
 
 ldata=4000000
 ltime=300

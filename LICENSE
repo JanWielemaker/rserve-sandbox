@@ -1,0 +1,5 @@
+The rserve-sandbox code is released in the public domain.
+
+Note that this license applies  to  the   code  in  this repository. The
+docker image you may build from  it   contains  code  subject to various
+licenses.

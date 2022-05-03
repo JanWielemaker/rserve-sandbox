@@ -1,3 +1,4 @@
+# Copying: This code is in the public domain
 # our R base image
 FROM r-base
 
