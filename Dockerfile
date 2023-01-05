@@ -52,7 +52,7 @@ RUN chmod o-rwx \
 	/sbin /usr/sbin /usr/local/bin \
 	/usr/bin/* /bin/* && \
     chmod o+x \
-	/bin/bash /bin/ls /bin/uname /bin/sh && \
+	/bin/bash /bin/ls /bin/rm /bin/uname /bin/sh /bin/ld.so && \
     chmod o+rx \
 	/usr/bin/R /usr/bin
 

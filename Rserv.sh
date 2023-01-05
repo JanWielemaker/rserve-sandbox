@@ -1,9 +1,10 @@
 #!/bin/bash
 # Copying: This code is in the public domain
 
-ldata=4000000
+ldata=8000000
 ltime=300
 lfile=20000
+shell=no
 
 usage()
 { echo "Usage: docker run [docker options] rserve [rserve options]"
@@ -17,8 +18,8 @@ usage()
 
 while [ ! -z "$1" ]; do
   case "$1" in
-    --bash)		/bin/bash
-			exit 0
+    --bash)		shell=yes
+			shift
 			;;
     --limit-data=*)	ldata="$(echo $1 | sed 's/[^=]*=//')"
 			shift
@@ -41,6 +42,7 @@ done
 ulimit -d $ldata
 ulimit -t $ltime
 ulimit -f $lfile
+ulimit -a
 
 mkuser()
 { f="$1"
@@ -60,7 +62,7 @@ noroot()
   if [ "$(ls -nd "$f" | awk '{printf "%s",$3 }')" = 0 -o \
        "$(ls -nd "$f" | awk '{printf "%s",$4 }')" = 0 ]; then
     useradd -U ruser
-    chown ruser.ruser $f
+    chown ruser:ruser $f
   else
     mkuser $1 ruser
   fi
@@ -68,8 +70,12 @@ noroot()
 
 noroot /rserve
 setuser /rserve
-chown ruser.ruser .
+chown ruser:ruser .
 
 cat Rserv.conf
 
-exec /usr/bin/R CMD Rserve --no-save --RS-conf Rserv.conf
+if [ $shell == yes ]; then
+    bash
+else
+    exec /usr/bin/R CMD Rserve --no-save --RS-conf Rserv.conf
+fi
