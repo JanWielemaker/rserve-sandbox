@@ -3,6 +3,7 @@
 FROM r-base
 
 RUN apt-get update && apt-get install -y \
+	file \
 	libcurl4-openssl-dev \
 	libssl-dev \
 	libcairo-dev
